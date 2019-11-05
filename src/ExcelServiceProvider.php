@@ -1,18 +1,18 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
-use Maatwebsite\Excel\Console\ExportMakeCommand;
-use Maatwebsite\Excel\Console\ImportMakeCommand;
-use Maatwebsite\Excel\Files\Filesystem;
-use Maatwebsite\Excel\Files\TemporaryFileFactory;
-use Maatwebsite\Excel\Mixins\DownloadCollection;
-use Maatwebsite\Excel\Mixins\StoreCollection;
-use Maatwebsite\Excel\Transactions\TransactionHandler;
-use Maatwebsite\Excel\Transactions\TransactionManager;
+use Omt\ExcelHelper\Console\ExportMakeCommand;
+use Omt\ExcelHelper\Console\ImportMakeCommand;
+use Omt\ExcelHelper\Files\Filesystem;
+use Omt\ExcelHelper\Files\TemporaryFileFactory;
+use Omt\ExcelHelper\Mixins\DownloadCollection;
+use Omt\ExcelHelper\Mixins\StoreCollection;
+use Omt\ExcelHelper\Transactions\TransactionHandler;
+use Omt\ExcelHelper\Transactions\TransactionManager;
 
 class ExcelServiceProvider extends ServiceProvider
 {
@@ -52,7 +52,7 @@ class ExcelServiceProvider extends ServiceProvider
 
         $this->app->bind(TemporaryFileFactory::class, function () {
             return new TemporaryFileFactory(
-                config('excel.temporary_files.local_path', config('excel.exports.temp_path', storage_path('framework/laravel-excel'))),
+                config('excel.temporary_files.local_path', config('excel.exports.temp_path', storage_path('framework/excel-helper'))),
                 config('excel.temporary_files.remote_disk')
 
             );

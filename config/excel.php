@@ -1,6 +1,6 @@
 <?php
 
-use Maatwebsite\Excel\Excel;
+use Omt\ExcelHelper\Excel;
 
 return [
 
@@ -129,7 +129,7 @@ return [
         | you can implement your own default value binder.
         |
         */
-        'default' => Maatwebsite\Excel\DefaultValueBinder::class,
+        'default' => Omt\ExcelHelper\DefaultValueBinder::class,
     ],
 
     'transactions' => [

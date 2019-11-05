@@ -1,11 +1,11 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\OnEachRow;
-use Maatwebsite\Excel\Row;
-use Maatwebsite\Excel\Tests\TestCase;
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\OnEachRow;
+use Omt\ExcelHelper\Row;
+use Omt\ExcelHelper\Tests\TestCase;
 use PHPUnit\Framework\Assert;
 
 class OnEachRowTest extends TestCase

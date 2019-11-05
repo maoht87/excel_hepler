@@ -1,13 +1,13 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToArray;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
-use Maatwebsite\Excel\Concerns\WithMappedCells;
+use Omt\ExcelHelper\Concerns\ToArray;
+use Omt\ExcelHelper\Concerns\ToCollection;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Concerns\WithCalculatedFormulas;
+use Omt\ExcelHelper\Concerns\WithMappedCells;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class MappedReader

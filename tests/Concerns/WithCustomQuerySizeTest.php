@@ -1,12 +1,12 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
-use Maatwebsite\Excel\Tests\Data\Stubs\AfterQueueExportJob;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\Group;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
-use Maatwebsite\Excel\Tests\Data\Stubs\FromQueryWithCustomQuerySize;
-use Maatwebsite\Excel\Tests\TestCase;
+use Omt\ExcelHelper\Tests\Data\Stubs\AfterQueueExportJob;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\Group;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Tests\Data\Stubs\FromQueryWithCustomQuerySize;
+use Omt\ExcelHelper\Tests\TestCase;
 
 class WithCustomQuerySizeTest extends TestCase
 {

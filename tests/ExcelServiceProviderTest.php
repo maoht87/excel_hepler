@@ -1,8 +1,8 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests;
+namespace Omt\ExcelHelper\Tests;
 
-use Maatwebsite\Excel\Excel;
+use Omt\ExcelHelper\Excel;
 
 class ExcelServiceProviderTest extends TestCase
 {

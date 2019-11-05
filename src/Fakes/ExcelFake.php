@@ -1,15 +1,15 @@
 <?php
 
-namespace Maatwebsite\Excel\Fakes;
+namespace Omt\ExcelHelper\Fakes;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Queue;
-use Maatwebsite\Excel\Exporter;
-use Maatwebsite\Excel\Importer;
-use Maatwebsite\Excel\Reader;
+use Omt\ExcelHelper\Exporter;
+use Omt\ExcelHelper\Importer;
+use Omt\ExcelHelper\Reader;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

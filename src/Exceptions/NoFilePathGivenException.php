@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Exceptions;
+namespace Omt\ExcelHelper\Exceptions;
 
 use InvalidArgumentException;
 use Throwable;

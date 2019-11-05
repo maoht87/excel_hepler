@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Files;
+namespace Omt\ExcelHelper\Files;
 
 use Illuminate\Contracts\Filesystem\Factory;
 

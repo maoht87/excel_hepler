@@ -1,12 +1,12 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
 use ArrayIterator;
 use Iterator;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\FromIterator;
-use Maatwebsite\Excel\Tests\TestCase;
+use Omt\ExcelHelper\Concerns\Exportable;
+use Omt\ExcelHelper\Concerns\FromIterator;
+use Omt\ExcelHelper\Tests\TestCase;
 
 class FromIteratorTest extends TestCase
 {

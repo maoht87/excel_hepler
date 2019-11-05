@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Concerns;
+namespace Omt\ExcelHelper\Concerns;
 
 use Illuminate\Console\OutputStyle;
 

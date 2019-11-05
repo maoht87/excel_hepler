@@ -18,7 +18,7 @@ exports and imports.
   <span> · </span>
   <a href="https://github.com/Maatwebsite/Laravel-Nova-Excel">Nova</a>
   <span> · </span>
-  <a href="https://medium.com/maatwebsite/laravel-excel/home">Blog</a>
+  <a href="https://medium.com/maatwebsite/excel-helper/home">Blog</a>
   <span> · </span>
   <a href="https://docs.laravel-excel.com/3.1/getting-started/contributing.html">Contributing</a>
   <span> · </span>
@@ -26,8 +26,8 @@ exports and imports.
 </h4>
 
 <p align="center">
-  <a href="https://travis-ci.org/Maatwebsite/Laravel-Excel">
-    <img src="https://travis-ci.org/Maatwebsite/Laravel-Excel.svg?branch=3.1" alt="Build Status">
+  <a href="https://travis-ci.org/Maatwebsite/excel-helper">
+    <img src="https://travis-ci.org/Maatwebsite/excel-helper.svg?branch=3.1" alt="Build Status">
   </a>
 
   <a href="https://styleci.io/repos/14259390">
@@ -64,9 +64,9 @@ exports and imports.
 
 You can find the full documentation of Laravel Excel [on the website](https://docs.laravel-excel.com).
 
-We welcome suggestions for improving our docs. The documentation repository can be found at [https://github.com/Maatwebsite/laravel-excel-docs](https://github.com/Maatwebsite/laravel-excel-docs).
+We welcome suggestions for improving our docs. The documentation repository can be found at [https://github.com/Maatwebsite/excel-helper-docs](https://github.com/Maatwebsite/excel-helper-docs).
 
-Some articles and tutorials can be found on our blog: https://medium.com/maatwebsite/laravel-excel/home
+Some articles and tutorials can be found on our blog: https://medium.com/maatwebsite/excel-helper/home
 
 ## 🎥 Video Course
 

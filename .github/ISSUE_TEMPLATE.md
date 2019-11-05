@@ -1,6 +1,6 @@
 <!--
 PLEASE READ: FILLING IN THE TEMPLATE IS REQUIRED!
-PLEASE CHOOSE AN ISSUE TYPE FROM https://github.com/Maatwebsite/Laravel-Excel/issues/new/choose
+PLEASE CHOOSE AN ISSUE TYPE FROM https://github.com/Maatwebsite/excel-helper/issues/new/choose
 Issues that have not been filled in using the issue template will be closed.
 -->
 

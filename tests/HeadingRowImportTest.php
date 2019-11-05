@@ -1,9 +1,9 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests;
+namespace Omt\ExcelHelper\Tests;
 
-use Maatwebsite\Excel\HeadingRowImport;
-use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+use Omt\ExcelHelper\HeadingRowImport;
+use Omt\ExcelHelper\Imports\HeadingRowFormatter;
 
 class HeadingRowImportTest extends TestCase
 {
@@ -61,7 +61,7 @@ class HeadingRowImportTest extends TestCase
 
         $this->assertEquals([
             [
-                ['patrick_brouwers', 'patrick_at_maatwebsitenl'],
+                ['maoht87', 'maodk_at_omt'],
             ],
         ], $headings);
     }

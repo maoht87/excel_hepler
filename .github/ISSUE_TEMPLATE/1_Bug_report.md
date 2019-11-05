@@ -14,8 +14,8 @@ Issues that do not include enough information might not be picked up.
 Issues that have not been filled in using the issue template will be CLOSED.
 
 Have you read Laravel-Excel's 
-contributing guidelines (https://laravel-excel.maatwebsite.nl/docs/3.1/getting-started/contributing)
-and Code Of Conduct (https://github.com/Maatwebsite/Laravel-Excel/blob/3.1/CODE_OF_CONDUCT.md)?
+contributing guidelines (https://excel-helper.maatwebsite.nl/docs/3.1/getting-started/contributing)
+and Code Of Conduct (https://github.com/Maatwebsite/excel-helper/blob/3.1/CODE_OF_CONDUCT.md)?
 By filing an Issue, you are expected to comply with it, including treating everyone with respect.
 
 Please prefix your issue with: [BUG] .

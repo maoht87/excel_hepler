@@ -1,14 +1,14 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToArray;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithStartRow;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
-use Maatwebsite\Excel\Tests\TestCase;
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\ToArray;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Concerns\WithStartRow;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Tests\TestCase;
 use PHPUnit\Framework\Assert;
 
 class WithStartRowTest extends TestCase
@@ -58,7 +58,7 @@ class WithStartRowTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'name'  => 'Patrick Brouwers',
-            'email' => 'patrick@maatwebsite.nl',
+            'email' => 'maodk61@gmail.com',
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -83,7 +83,7 @@ class WithStartRowTest extends TestCase
                 Assert::assertEquals([
                     [
                         'Patrick Brouwers',
-                        'patrick@maatwebsite.nl',
+                        'maodk61@gmail.com',
                     ],
                     [
                         'Taylor Otwell',

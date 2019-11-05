@@ -1,22 +1,22 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\WithCustomChunkSize;
-use Maatwebsite\Excel\Concerns\WithCustomQuerySize;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
-use Maatwebsite\Excel\Files\TemporaryFile;
-use Maatwebsite\Excel\Files\TemporaryFileFactory;
-use Maatwebsite\Excel\Jobs\AppendDataToSheet;
-use Maatwebsite\Excel\Jobs\AppendQueryToSheet;
-use Maatwebsite\Excel\Jobs\AppendViewToSheet;
-use Maatwebsite\Excel\Jobs\CloseSheet;
-use Maatwebsite\Excel\Jobs\QueueExport;
-use Maatwebsite\Excel\Jobs\StoreQueuedExport;
+use Omt\ExcelHelper\Concerns\FromCollection;
+use Omt\ExcelHelper\Concerns\FromQuery;
+use Omt\ExcelHelper\Concerns\FromView;
+use Omt\ExcelHelper\Concerns\WithCustomChunkSize;
+use Omt\ExcelHelper\Concerns\WithCustomQuerySize;
+use Omt\ExcelHelper\Concerns\WithMultipleSheets;
+use Omt\ExcelHelper\Files\TemporaryFile;
+use Omt\ExcelHelper\Files\TemporaryFileFactory;
+use Omt\ExcelHelper\Jobs\AppendDataToSheet;
+use Omt\ExcelHelper\Jobs\AppendQueryToSheet;
+use Omt\ExcelHelper\Jobs\AppendViewToSheet;
+use Omt\ExcelHelper\Jobs\CloseSheet;
+use Omt\ExcelHelper\Jobs\QueueExport;
+use Omt\ExcelHelper\Jobs\StoreQueuedExport;
 use Traversable;
 
 class QueuedWriter

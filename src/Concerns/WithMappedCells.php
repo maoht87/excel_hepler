@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Concerns;
+namespace Omt\ExcelHelper\Concerns;
 
 interface WithMappedCells
 {

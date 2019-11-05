@@ -1,10 +1,10 @@
 <?php
 
-namespace Maatwebsite\Excel\Exceptions;
+namespace Omt\ExcelHelper\Exceptions;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Validators\Failure;
+use Omt\ExcelHelper\Validators\Failure;
 
 class RowSkippedException extends Exception
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Maatwebsite\Excel\Facades;
+namespace Omt\ExcelHelper\Facades;
 
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
-use Maatwebsite\Excel\Excel as BaseExcel;
-use Maatwebsite\Excel\Fakes\ExcelFake;
+use Omt\ExcelHelper\Excel as BaseExcel;
+use Omt\ExcelHelper\Fakes\ExcelFake;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**

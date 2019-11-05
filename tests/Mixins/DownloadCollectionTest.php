@@ -1,11 +1,11 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Mixins;
+namespace Omt\ExcelHelper\Tests\Mixins;
 
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Excel;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
-use Maatwebsite\Excel\Tests\TestCase;
+use Omt\ExcelHelper\Excel;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Tests\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DownloadCollectionTest extends TestCase

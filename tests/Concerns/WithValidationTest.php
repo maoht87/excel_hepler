@@ -1,17 +1,17 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
-use Maatwebsite\Excel\Tests\TestCase;
-use Maatwebsite\Excel\Validators\ValidationException;
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Concerns\WithBatchInserts;
+use Omt\ExcelHelper\Concerns\WithHeadingRow;
+use Omt\ExcelHelper\Concerns\WithValidation;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Tests\TestCase;
+use Omt\ExcelHelper\Validators\ValidationException;
 
 class WithValidationTest extends TestCase
 {
@@ -54,7 +54,7 @@ class WithValidationTest extends TestCase
             public function rules(): array
             {
                 return [
-                    '1' => Rule::in(['patrick@maatwebsite.nl']),
+                    '1' => Rule::in(['maodk61@gmail.com']),
                 ];
             }
         };
@@ -105,7 +105,7 @@ class WithValidationTest extends TestCase
             {
                 return [
                     '1' => function ($attribute, $value, $onFail) {
-                        if ($value !== 'patrick@maatwebsite.nl') {
+                        if ($value !== 'maodk61@gmail.com') {
                             $onFail(sprintf('Value in column 1 is not an allowed e-mail.'));
                         }
                     },
@@ -167,7 +167,7 @@ class WithValidationTest extends TestCase
                          */
                         public function passes($attribute, $value)
                         {
-                            return $value === 'patrick@maatwebsite.nl';
+                            return $value === 'maodk61@gmail.com';
                         }
 
                         /**
@@ -229,7 +229,7 @@ class WithValidationTest extends TestCase
             public function rules(): array
             {
                 return [
-                    'conditional_required_column' => 'required_if:1,patrick@maatwebsite.nl',
+                    'conditional_required_column' => 'required_if:1,maodk61@gmail.com',
                 ];
             }
         };
@@ -238,7 +238,7 @@ class WithValidationTest extends TestCase
             $import->import('import-users.xlsx');
         } catch (ValidationException $e) {
             $this->validateFailure($e, 1, 'conditional_required_column', [
-                'The conditional_required_column field is required when 1.1 is patrick@maatwebsite.nl.',
+                'The conditional_required_column field is required when 1.1 is maodk61@gmail.com.',
             ]);
         }
 
@@ -273,7 +273,7 @@ class WithValidationTest extends TestCase
             public function rules(): array
             {
                 return [
-                    '1' => Rule::in(['patrick@maatwebsite.nl']),
+                    '1' => Rule::in(['maodk61@gmail.com']),
                 ];
             }
 
@@ -325,7 +325,7 @@ class WithValidationTest extends TestCase
             public function rules(): array
             {
                 return [
-                    '1' => Rule::in(['patrick@maatwebsite.nl']),
+                    '1' => Rule::in(['maodk61@gmail.com']),
                 ];
             }
 
@@ -379,7 +379,7 @@ class WithValidationTest extends TestCase
             public function rules(): array
             {
                 return [
-                    'email' => Rule::in(['patrick@maatwebsite.nl']),
+                    'email' => Rule::in(['maodk61@gmail.com']),
                 ];
             }
         };
@@ -431,7 +431,7 @@ class WithValidationTest extends TestCase
             public function rules(): array
             {
                 return [
-                    'email' => Rule::in(['patrick@maatwebsite.nl']),
+                    'email' => Rule::in(['maodk61@gmail.com']),
                 ];
             }
         };

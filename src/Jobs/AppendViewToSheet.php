@@ -1,13 +1,13 @@
 <?php
 
-namespace Maatwebsite\Excel\Jobs;
+namespace Omt\ExcelHelper\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Files\TemporaryFile;
-use Maatwebsite\Excel\Writer;
+use Omt\ExcelHelper\Concerns\FromView;
+use Omt\ExcelHelper\Files\TemporaryFile;
+use Omt\ExcelHelper\Writer;
 
 class AppendViewToSheet implements ShouldQueue
 {

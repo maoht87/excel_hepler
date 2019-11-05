@@ -1,12 +1,12 @@
 <?php
 
-namespace Maatwebsite\Excel\Jobs;
+namespace Omt\ExcelHelper\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Maatwebsite\Excel\Files\TemporaryFile;
-use Maatwebsite\Excel\Writer;
+use Omt\ExcelHelper\Files\TemporaryFile;
+use Omt\ExcelHelper\Writer;
 
 class AppendDataToSheet implements ShouldQueue
 {

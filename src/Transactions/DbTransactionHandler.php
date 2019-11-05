@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Transactions;
+namespace Omt\ExcelHelper\Transactions;
 
 use Illuminate\Database\ConnectionInterface;
 

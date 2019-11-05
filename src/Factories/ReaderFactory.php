@@ -1,11 +1,11 @@
 <?php
 
-namespace Maatwebsite\Excel\Factories;
+namespace Omt\ExcelHelper\Factories;
 
-use Maatwebsite\Excel\Concerns\MapsCsvSettings;
-use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
-use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
-use Maatwebsite\Excel\Files\TemporaryFile;
+use Omt\ExcelHelper\Concerns\MapsCsvSettings;
+use Omt\ExcelHelper\Concerns\WithCustomCsvSettings;
+use Omt\ExcelHelper\Exceptions\NoTypeDetectedException;
+use Omt\ExcelHelper\Files\TemporaryFile;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
