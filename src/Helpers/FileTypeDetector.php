@@ -1,9 +1,9 @@
 <?php
 
-namespace Maatwebsite\Excel\Helpers;
+namespace Omt\ExcelHelper\Helpers;
 
+use Omt\ExcelHelper\Exceptions\NoTypeDetectedException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
 
 class FileTypeDetector
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -11,12 +11,13 @@ interface Exporter
      * @param object      $export
      * @param string|null $fileName
      * @param string      $writerType
+     * @param array       $headers
      *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @return BinaryFileResponse
      */
-    public function download($export, string $fileName, string $writerType = null);
+    public function download($export, string $fileName, string $writerType = null, array $headers = []);
 
     /**
      * @param object      $export

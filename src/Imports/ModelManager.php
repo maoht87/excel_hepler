@@ -1,17 +1,16 @@
 <?php
 
-namespace Maatwebsite\Excel\Imports;
+namespace Omt\ExcelHelper\Imports;
 
-use Throwable;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Validators\RowValidator;
-use Maatwebsite\Excel\Exceptions\RowSkippedException;
-use Maatwebsite\Excel\Validators\ValidationException;
-use Maatwebsite\Excel\Imports\Persistence\CascadePersistManager;
+use Illuminate\Support\Collection;
+use Omt\ExcelHelper\Concerns\SkipsOnError;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Concerns\WithValidation;
+use Omt\ExcelHelper\Exceptions\RowSkippedException;
+use Omt\ExcelHelper\Validators\RowValidator;
+use Omt\ExcelHelper\Validators\ValidationException;
+use Throwable;
 
 class ModelManager
 {
@@ -26,18 +25,11 @@ class ModelManager
     private $validator;
 
     /**
-     * @var CascadePersistManager
+     * @param RowValidator $validator
      */
-    private $cascade;
-
-    /**
-     * @param RowValidator          $validator
-     * @param CascadePersistManager $cascade
-     */
-    public function __construct(RowValidator $validator, CascadePersistManager $cascade)
+    public function __construct(RowValidator $validator)
     {
         $this->validator = $validator;
-        $this->cascade   = $cascade;
     }
 
     /**
@@ -123,7 +115,7 @@ class ModelManager
             ->each(function (array $attributes) use ($import) {
                 $this->toModels($import, $attributes)->each(function (Model $model) use ($import) {
                     try {
-                        $this->cascade->persist($model);
+                        $model->saveOrFail();
                     } catch (Throwable $e) {
                         if ($import instanceof SkipsOnError) {
                             $import->onError($e);

@@ -1,10 +1,10 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
-use Maatwebsite\Excel\Tests\TestCase;
-use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\Exportable;
+use Omt\ExcelHelper\Concerns\Exportable;
+use Omt\ExcelHelper\Concerns\FromArray;
+use Omt\ExcelHelper\Tests\TestCase;
 
 class FromArrayTest extends TestCase
 {

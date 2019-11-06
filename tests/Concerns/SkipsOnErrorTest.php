@@ -1,17 +1,17 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
-use Throwable;
-use PHPUnit\Framework\Assert;
-use Maatwebsite\Excel\Tests\TestCase;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\SkipsErrors;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\SkipsErrors;
+use Omt\ExcelHelper\Concerns\SkipsOnError;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Tests\TestCase;
+use PHPUnit\Framework\Assert;
+use Throwable;
 
 class SkipsOnErrorTest extends TestCase
 {
@@ -55,7 +55,7 @@ class SkipsOnErrorTest extends TestCase
             public function onError(Throwable $e)
             {
                 Assert::assertInstanceOf(QueryException::class, $e);
-                Assert::stringContains($e->getMessage(), 'Duplicate entry \'patrick@maatwebsite.nl\'');
+                Assert::stringContains($e->getMessage(), 'Duplicate entry \'maodk61@gmail.com\'');
 
                 $this->errors++;
             }
@@ -67,7 +67,7 @@ class SkipsOnErrorTest extends TestCase
 
         // Shouldn't have rollbacked other imported rows.
         $this->assertDatabaseHas('users', [
-            'email' => 'patrick@maatwebsite.nl',
+            'email' => 'maodk61@gmail.com',
         ]);
 
         // Should have skipped inserting
@@ -107,11 +107,11 @@ class SkipsOnErrorTest extends TestCase
         $e = $import->errors()->first();
 
         $this->assertInstanceOf(QueryException::class, $e);
-        $this->stringContains($e->getMessage(), 'Duplicate entry \'patrick@maatwebsite.nl\'');
+        $this->stringContains($e->getMessage(), 'Duplicate entry \'maodk61@gmail.com\'');
 
         // Shouldn't have rollbacked other imported rows.
         $this->assertDatabaseHas('users', [
-            'email' => 'patrick@maatwebsite.nl',
+            'email' => 'maodk61@gmail.com',
         ]);
 
         // Should have skipped inserting

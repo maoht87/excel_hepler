@@ -1,52 +1,52 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToArray;
-use Maatwebsite\Excel\Concerns\ToModel;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Events\AfterSheet;
-use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\OnEachRow;
-use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Events\BeforeSheet;
-use Maatwebsite\Excel\Helpers\CellHelper;
+use Omt\ExcelHelper\Concerns\FromArray;
+use Omt\ExcelHelper\Concerns\FromCollection;
+use Omt\ExcelHelper\Concerns\FromGenerator;
+use Omt\ExcelHelper\Concerns\FromIterator;
+use Omt\ExcelHelper\Concerns\FromQuery;
+use Omt\ExcelHelper\Concerns\FromView;
+use Omt\ExcelHelper\Concerns\OnEachRow;
+use Omt\ExcelHelper\Concerns\ShouldAutoSize;
+use Omt\ExcelHelper\Concerns\ToArray;
+use Omt\ExcelHelper\Concerns\ToCollection;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Concerns\WithCalculatedFormulas;
+use Omt\ExcelHelper\Concerns\WithCharts;
+use Omt\ExcelHelper\Concerns\WithChunkReading;
+use Omt\ExcelHelper\Concerns\WithColumnFormatting;
+use Omt\ExcelHelper\Concerns\WithCustomChunkSize;
+use Omt\ExcelHelper\Concerns\WithCustomStartCell;
+use Omt\ExcelHelper\Concerns\WithCustomValueBinder;
+use Omt\ExcelHelper\Concerns\WithDrawings;
+use Omt\ExcelHelper\Concerns\WithEvents;
+use Omt\ExcelHelper\Concerns\WithHeadings;
+use Omt\ExcelHelper\Concerns\WithMappedCells;
+use Omt\ExcelHelper\Concerns\WithMapping;
+use Omt\ExcelHelper\Concerns\WithProgressBar;
+use Omt\ExcelHelper\Concerns\WithStrictNullComparison;
+use Omt\ExcelHelper\Concerns\WithTitle;
+use Omt\ExcelHelper\Events\AfterSheet;
+use Omt\ExcelHelper\Events\BeforeSheet;
+use Omt\ExcelHelper\Exceptions\ConcernConflictException;
+use Omt\ExcelHelper\Exceptions\SheetNotFoundException;
+use Omt\ExcelHelper\Files\TemporaryFileFactory;
+use Omt\ExcelHelper\Helpers\ArrayHelper;
+use Omt\ExcelHelper\Helpers\CellHelper;
+use Omt\ExcelHelper\Imports\EndRowFinder;
+use Omt\ExcelHelper\Imports\HeadingRowExtractor;
+use Omt\ExcelHelper\Imports\ModelImporter;
+use PhpOffice\PhpSpreadsheet\Cell\Cell as SpreadsheetCell;
 use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use Maatwebsite\Excel\Concerns\WithCharts;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Helpers\ArrayHelper;
-use Illuminate\Contracts\Support\Arrayable;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Imports\EndRowFinder;
-use Maatwebsite\Excel\Concerns\FromIterator;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithDrawings;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Imports\ModelImporter;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\WithMappedCells;
-use Maatwebsite\Excel\Concerns\WithProgressBar;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Files\TemporaryFileFactory;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Maatwebsite\Excel\Imports\HeadingRowExtractor;
-use Maatwebsite\Excel\Concerns\WithCustomChunkSize;
-use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
-use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
-use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
-use Maatwebsite\Excel\Exceptions\SheetNotFoundException;
-use Maatwebsite\Excel\Exceptions\ConcernConflictException;
-use PhpOffice\PhpSpreadsheet\Cell\Cell as SpreadsheetCell;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class Sheet
 {
@@ -208,6 +208,10 @@ class Sheet
             if ($sheetExport instanceof FromIterator) {
                 $this->fromIterator($sheetExport);
             }
+
+            if ($sheetExport instanceof FromGenerator) {
+                $this->fromGenerator($sheetExport);
+            }
         }
 
         $this->close($sheetExport);
@@ -250,11 +254,7 @@ class Sheet
         if ($import instanceof OnEachRow) {
             $headingRow = HeadingRowExtractor::extract($this->worksheet, $import);
             foreach ($this->worksheet->getRowIterator()->resetStart($startRow ?? 1) as $row) {
-                $row = new Row($row, $headingRow);
-
-                if (!$import instanceof SkipsEmptyRows || ($import instanceof SkipsEmptyRows && !$row->isEmpty())) {
-                    $import->onRow($row);
-                }
+                $import->onRow(new Row($row, $headingRow));
 
                 if ($import instanceof WithProgressBar) {
                     $import->getConsoleOutput()->progressAdvance();
@@ -285,13 +285,7 @@ class Sheet
 
         $rows = [];
         foreach ($this->worksheet->getRowIterator($startRow, $endRow) as $row) {
-            $row = new Row($row, $headingRow);
-
-            if ($import instanceof SkipsEmptyRows && $row->isEmpty()) {
-                continue;
-            }
-
-            $row = $row->toArray($nullValue, $calculateFormulas, $formatData);
+            $row = (new Row($row, $headingRow))->toArray($nullValue, $calculateFormulas, $formatData);
 
             if ($import instanceof WithMapping) {
                 $row = $import->map($row);
@@ -347,10 +341,11 @@ class Sheet
 
     /**
      * @param FromView $sheetExport
+     * @param int|null $sheetIndex
      *
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public function fromView(FromView $sheetExport)
+    public function fromView(FromView $sheetExport, $sheetIndex = null)
     {
         $temporaryFile = $this->temporaryFileFactory->makeLocal();
         $temporaryFile->put($sheetExport->view()->render());
@@ -360,8 +355,8 @@ class Sheet
         /** @var Html $reader */
         $reader = IOFactory::createReader('Html');
 
-        // Insert content into the last sheet
-        $reader->setSheetIndex($spreadsheet->getSheetCount() - 1);
+        // If no sheetIndex given, insert content into the last sheet
+        $reader->setSheetIndex($sheetIndex ?? $spreadsheet->getSheetCount() - 1);
         $reader->loadIntoExisting($temporaryFile->getLocalPath(), $spreadsheet);
 
         $temporaryFile->delete();
@@ -400,6 +395,14 @@ class Sheet
     public function fromIterator(FromIterator $sheetExport)
     {
         $this->appendRows($sheetExport->iterator(), $sheetExport);
+    }
+
+    /**
+     * @param FromGenerator $sheetExport
+     */
+    public function fromGenerator(FromGenerator $sheetExport)
+    {
+        $this->appendRows($sheetExport->generator(), $sheetExport);
     }
 
     /**

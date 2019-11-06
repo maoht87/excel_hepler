@@ -1,21 +1,20 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
+use Omt\ExcelHelper\Concerns\WithCustomValueBinder;
+use Omt\ExcelHelper\Concerns\WithEvents;
+use Omt\ExcelHelper\Concerns\WithMultipleSheets;
+use Omt\ExcelHelper\Concerns\WithTitle;
+use Omt\ExcelHelper\Events\BeforeExport;
+use Omt\ExcelHelper\Events\BeforeWriting;
+use Omt\ExcelHelper\Factories\WriterFactory;
+use Omt\ExcelHelper\Files\RemoteTemporaryFile;
+use Omt\ExcelHelper\Files\TemporaryFile;
+use Omt\ExcelHelper\Files\TemporaryFileFactory;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Maatwebsite\Excel\Concerns\WithTitle;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\BeforeExport;
-use Maatwebsite\Excel\Files\TemporaryFile;
-use Maatwebsite\Excel\Config\Configuration;
-use Maatwebsite\Excel\Events\BeforeWriting;
-use Maatwebsite\Excel\Factories\WriterFactory;
-use Maatwebsite\Excel\Files\RemoteTemporaryFile;
-use Maatwebsite\Excel\Files\TemporaryFileFactory;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
-use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 
 class Writer
 {
@@ -42,6 +41,8 @@ class Writer
     public function __construct(TemporaryFileFactory $temporaryFileFactory)
     {
         $this->temporaryFileFactory = $temporaryFileFactory;
+
+        $this->setDefaultValueBinder();
     }
 
     /**
@@ -136,14 +137,15 @@ class Writer
         );
 
         $writer->save(
-            $temporaryFile->getLocalPath()
+            $path = $temporaryFile->getLocalPath()
         );
 
         if ($temporaryFile instanceof RemoteTemporaryFile) {
             $temporaryFile->updateRemote();
         }
 
-        $this->garbageCollect();
+        $this->spreadsheet->disconnectWorksheets();
+        unset($this->spreadsheet);
 
         return $temporaryFile;
     }
@@ -168,6 +170,18 @@ class Writer
     }
 
     /**
+     * @return $this
+     */
+    public function setDefaultValueBinder()
+    {
+        Cell::setValueBinder(
+            app(config('excel.value_binder.default', DefaultValueBinder::class))
+        );
+
+        return $this;
+    }
+
+    /**
      * @param int $sheetIndex
      *
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -186,28 +200,5 @@ class Writer
     public function hasConcern($concern): bool
     {
         return $this->exportable instanceof $concern;
-    }
-
-    /**
-     * Garbage collect.
-     */
-    private function garbageCollect()
-    {
-        $this->spreadsheet->disconnectWorksheets();
-        unset($this->spreadsheet);
-
-        $this->resetValueBinder();
-    }
-
-    /**
-     * @return $this
-     */
-    private function resetValueBinder(): self
-    {
-        Cell::setValueBinder(
-            Configuration::getDefaultValueBinder()
-        );
-
-        return $this;
     }
 }

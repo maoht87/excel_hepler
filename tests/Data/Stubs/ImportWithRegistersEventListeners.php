@@ -1,10 +1,10 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Data\Stubs;
+namespace Omt\ExcelHelper\Tests\Data\Stubs;
 
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\RegistersEventListeners;
+use Omt\ExcelHelper\Concerns\WithEvents;
 
 class ImportWithRegistersEventListeners implements WithEvents
 {

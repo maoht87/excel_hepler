@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Data\Stubs\Database;
+namespace Omt\ExcelHelper\Tests\Data\Stubs\Database;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,7 +15,7 @@ class User extends Model
     /**
      * @var array
      */
-    protected $hidden = ['password', 'email_verified_at', 'group_id'];
+    protected $hidden = ['password', 'email_verified_at'];
 
     /**
      * @return BelongsToMany
@@ -23,13 +23,5 @@ class User extends Model
     public function groups(): BelongsToMany
     {
         return $this->belongsToMany(Group::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function group()
-    {
-        return $this->belongsTo(Group::class);
     }
 }

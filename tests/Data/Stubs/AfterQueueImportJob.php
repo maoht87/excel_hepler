@@ -1,11 +1,11 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Data\Stubs;
+namespace Omt\ExcelHelper\Tests\Data\Stubs;
 
 use Illuminate\Bus\Queueable;
-use PHPUnit\Framework\Assert;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Assert;
 
 class AfterQueueImportJob implements ShouldQueue
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Console;
+namespace Omt\ExcelHelper\Console;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;

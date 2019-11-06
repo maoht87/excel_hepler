@@ -1,19 +1,17 @@
 <?php
 
-namespace Maatwebsite\Excel\Factories;
+namespace Omt\ExcelHelper\Factories;
 
+use Omt\ExcelHelper\Concerns\MapsCsvSettings;
+use Omt\ExcelHelper\Concerns\WithCharts;
+use Omt\ExcelHelper\Concerns\WithCustomCsvSettings;
+use Omt\ExcelHelper\Concerns\WithMultipleSheets;
+use Omt\ExcelHelper\Concerns\WithPreCalculateFormulas;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Html;
-use Maatwebsite\Excel\Concerns\WithCharts;
-use Maatwebsite\Excel\Config\Configuration;
 use PhpOffice\PhpSpreadsheet\Writer\IWriter;
-use Maatwebsite\Excel\Concerns\MapsCsvSettings;
-use PhpOffice\PhpSpreadsheet\Writer\BaseWriter;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
-use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
-use Maatwebsite\Excel\Concerns\WithPreCalculateFormulas;
 
 class WriterFactory
 {
@@ -29,12 +27,7 @@ class WriterFactory
      */
     public static function make(string $writerType, Spreadsheet $spreadsheet, $export): IWriter
     {
-        /** @var IWriter|BaseWriter $writer */
         $writer = IOFactory::createWriter($spreadsheet, $writerType);
-
-        $writer->setUseDiskCaching(
-            Configuration::usesDiskCache()
-        );
 
         if (static::includesCharts($export)) {
             $writer->setIncludeCharts(true);

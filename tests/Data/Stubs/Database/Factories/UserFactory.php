@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
+use Illuminate\Support\Str;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
 
 /*
 |--------------------------------------------------------------------------

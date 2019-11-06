@@ -1,11 +1,11 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Data\Stubs;
+namespace Omt\ExcelHelper\Tests\Data\Stubs;
 
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\Exportable;
+use Illuminate\Support\Collection;
+use Omt\ExcelHelper\Concerns\Exportable;
+use Omt\ExcelHelper\Concerns\FromView;
 
 class SheetForUsersFromView implements FromView
 {

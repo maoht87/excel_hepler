@@ -1,14 +1,14 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Data\Stubs;
+namespace Omt\ExcelHelper\Tests\Data\Stubs;
 
-use Illuminate\Database\Query\Builder;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithCustomChunkSize;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\Group;
+use Illuminate\Database\Query\Builder;
+use Omt\ExcelHelper\Concerns\Exportable;
+use Omt\ExcelHelper\Concerns\FromQuery;
+use Omt\ExcelHelper\Concerns\WithCustomChunkSize;
+use Omt\ExcelHelper\Concerns\WithMapping;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\Group;
 
 class FromGroupUsersQueuedQueryExport implements FromQuery, WithCustomChunkSize, ShouldQueue, WithMapping
 {

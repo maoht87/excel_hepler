@@ -1,8 +1,8 @@
 <?php
 
-namespace Maatwebsite\Excel\Events;
+namespace Omt\ExcelHelper\Events;
 
-use Maatwebsite\Excel\Writer;
+use Omt\ExcelHelper\Writer;
 
 class BeforeWriting extends Event
 {

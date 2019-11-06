@@ -1,10 +1,10 @@
 <?php
 
-namespace Maatwebsite\Excel\Concerns;
+namespace Omt\ExcelHelper\Concerns;
 
-use Throwable;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Validators\Failure;
+use Omt\ExcelHelper\Validators\Failure;
+use Throwable;
 
 trait SkipsErrors
 {

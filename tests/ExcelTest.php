@@ -1,23 +1,24 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests;
+namespace Omt\ExcelHelper\Tests;
 
-use Maatwebsite\Excel\Excel;
-use PHPUnit\Framework\Assert;
-use Maatwebsite\Excel\Importer;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\ToArray;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Facades\Excel as ExcelFacade;
-use Maatwebsite\Excel\Tests\Data\Stubs\EmptyExport;
-use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+use Omt\ExcelHelper\Concerns\Exportable;
+use Omt\ExcelHelper\Concerns\FromCollection;
+use Omt\ExcelHelper\Concerns\FromView;
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\RegistersEventListeners;
+use Omt\ExcelHelper\Concerns\ToArray;
+use Omt\ExcelHelper\Concerns\WithCustomCsvSettings;
+use Omt\ExcelHelper\Concerns\WithEvents;
+use Omt\ExcelHelper\Excel;
+use Omt\ExcelHelper\Facades\Excel as ExcelFacade;
+use Omt\ExcelHelper\Importer;
+use Omt\ExcelHelper\Tests\Data\Stubs\EmptyExport;
+use Omt\ExcelHelper\Tests\Helpers\FileHelper;
+use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExcelTest extends TestCase
@@ -66,11 +67,17 @@ class ExcelTest extends TestCase
     public function can_store_an_export_object_on_default_disk()
     {
         $export = new EmptyExport;
+        $name   = 'filename.xlsx';
+        $path   = FileHelper::absolutePath($name, 'local');
 
-        $response = $this->SUT->store($export, 'filename.xlsx');
+        @unlink($path);
+
+        $this->assertFileNotExists($path);
+
+        $response = $this->SUT->store($export, $name);
 
         $this->assertTrue($response);
-        $this->assertFileExists(__DIR__ . '/Data/Disks/Local/filename.xlsx');
+        $this->assertFileExists($path);
     }
 
     /**
@@ -79,11 +86,17 @@ class ExcelTest extends TestCase
     public function can_store_an_export_object_on_another_disk()
     {
         $export = new EmptyExport;
+        $name   = 'filename.xlsx';
+        $path   = FileHelper::absolutePath($name, 'test');
 
-        $response = $this->SUT->store($export, 'filename.xlsx', 'test');
+        @unlink($path);
+
+        $this->assertFileNotExists($path);
+
+        $response = $this->SUT->store($export, $name, 'test');
 
         $this->assertTrue($response);
-        $this->assertFileExists(__DIR__ . '/Data/Disks/Test/filename.xlsx');
+        $this->assertFileExists($path);
     }
 
     /**
@@ -92,11 +105,17 @@ class ExcelTest extends TestCase
     public function can_store_csv_export_with_default_settings()
     {
         $export = new EmptyExport;
+        $name   = 'filename.csv';
+        $path   = FileHelper::absolutePath($name, 'local');
 
-        $response = $this->SUT->store($export, 'filename.csv');
+        @unlink($path);
+
+        $this->assertFileNotExists($path);
+
+        $response = $this->SUT->store($export, $name);
 
         $this->assertTrue($response);
-        $this->assertFileExists(__DIR__ . '/Data/Disks/Local/filename.csv');
+        $this->assertFileExists($path);
     }
 
     /**
@@ -117,11 +136,17 @@ class ExcelTest extends TestCase
     public function can_store_tsv_export_with_default_settings()
     {
         $export = new EmptyExport;
+        $name   = 'filename.tsv';
+        $path   = FileHelper::absolutePath($name, 'local');
 
-        $response = $this->SUT->store($export, 'filename.tsv');
+        @unlink($path);
+
+        $this->assertFileNotExists($path);
+
+        $response = $this->SUT->store($export, $name);
 
         $this->assertTrue($response);
-        $this->assertFileExists(__DIR__ . '/Data/Disks/Local/filename.tsv');
+        $this->assertFileExists($path);
     }
 
     /**
@@ -172,7 +197,7 @@ class ExcelTest extends TestCase
      */
     public function cannot_use_from_collection_and_from_view_on_same_export()
     {
-        $this->expectException(\Maatwebsite\Excel\Exceptions\ConcernConflictException::class);
+        $this->expectException(\Omt\ExcelHelper\Exceptions\ConcernConflictException::class);
         $this->expectExceptionMessage('Cannot use FromQuery, FromArray or FromCollection and FromView on the same sheet');
 
         $export = new class implements FromCollection, FromView {
@@ -380,7 +405,7 @@ class ExcelTest extends TestCase
      */
     public function import_will_throw_error_when_no_reader_type_could_be_detected_when_no_extension()
     {
-        $this->expectException(\Maatwebsite\Excel\Exceptions\NoTypeDetectedException::class);
+        $this->expectException(\Omt\ExcelHelper\Exceptions\NoTypeDetectedException::class);
 
         $import = new class implements ToArray {
             /**
@@ -403,7 +428,7 @@ class ExcelTest extends TestCase
      */
     public function import_will_throw_error_when_no_reader_type_could_be_detected_with_unknown_extension()
     {
-        $this->expectException(\Maatwebsite\Excel\Exceptions\NoTypeDetectedException::class);
+        $this->expectException(\Omt\ExcelHelper\Exceptions\NoTypeDetectedException::class);
 
         $import = new class implements ToArray {
             /**

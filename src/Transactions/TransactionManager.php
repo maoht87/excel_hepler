@@ -1,9 +1,8 @@
 <?php
 
-namespace Maatwebsite\Excel\Transactions;
+namespace Omt\ExcelHelper\Transactions;
 
 use Illuminate\Support\Manager;
-use Maatwebsite\Excel\Config\Configuration;
 
 class TransactionManager extends Manager
 {
@@ -12,7 +11,7 @@ class TransactionManager extends Manager
      */
     public function getDefaultDriver()
     {
-        return Configuration::getTransactionHandler();
+        return config('excel.transactions.handler');
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel;
+namespace Omt\ExcelHelper;
 
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Worksheet\Row as SpreadsheetRow;
@@ -82,13 +82,5 @@ class Row
     public function getIndex(): int
     {
         return $this->row->getRowIndex();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return count(array_filter($this->toArray(null, false, false))) === 0;
     }
 }

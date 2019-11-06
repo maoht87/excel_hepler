@@ -1,6 +1,6 @@
 <?php
 
-namespace Maatwebsite\Excel\Files;
+namespace Omt\ExcelHelper\Files;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -53,9 +53,9 @@ abstract class TemporaryFile
     public function copyFrom($filePath, string $disk = null): TemporaryFile
     {
         if ($filePath instanceof UploadedFile) {
-            $readStream = fopen($filePath->getRealPath(), 'rb+');
+            $readStream = fopen($filePath->getRealPath(), 'rb');
         } elseif ($disk === null && realpath($filePath) !== false) {
-            $readStream = fopen($filePath, 'rb+');
+            $readStream = fopen($filePath, 'rb');
         } else {
             $readStream = app('filesystem')->disk($disk)->readStream($filePath);
         }

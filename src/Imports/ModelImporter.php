@@ -1,15 +1,14 @@
 <?php
 
-namespace Maatwebsite\Excel\Imports;
+namespace Omt\ExcelHelper\Imports;
 
-use Maatwebsite\Excel\Row;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\WithProgressBar;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Omt\ExcelHelper\Concerns\ToModel;
+use Omt\ExcelHelper\Concerns\WithBatchInserts;
+use Omt\ExcelHelper\Concerns\WithCalculatedFormulas;
+use Omt\ExcelHelper\Concerns\WithMapping;
+use Omt\ExcelHelper\Concerns\WithProgressBar;
+use Omt\ExcelHelper\Row;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
 class ModelImporter
 {
@@ -33,36 +32,37 @@ class ModelImporter
      */
     public function import(Worksheet $worksheet, ToModel $import, int $startRow = 1)
     {
-        $headingRow = HeadingRowExtractor::extract($worksheet, $import);
-        $batchSize  = $import instanceof WithBatchInserts ? $import->batchSize() : 1;
-        $endRow     = EndRowFinder::find($import, $startRow);
+        $headingRow       = HeadingRowExtractor::extract($worksheet, $import);
+        $batchSize        = $import instanceof WithBatchInserts ? $import->batchSize() : 1;
+        $endRow           = EndRowFinder::find($import, $startRow);
+        $progessBar       = $import instanceof WithProgressBar;
+        $withMapping      = $import instanceof WithMapping;
+        $withCalcFormulas = $import instanceof WithCalculatedFormulas;
 
         $i = 0;
         foreach ($worksheet->getRowIterator($startRow, $endRow) as $spreadSheetRow) {
             $i++;
 
-            $row = new Row($spreadSheetRow, $headingRow);
-            if (!$import instanceof SkipsEmptyRows || ($import instanceof SkipsEmptyRows && !$row->isEmpty())) {
-                $rowArray = $row->toArray(null, $import instanceof WithCalculatedFormulas);
+            $row      = new Row($spreadSheetRow, $headingRow);
+            $rowArray = $row->toArray(null, $withCalcFormulas);
 
-                if ($import instanceof WithMapping) {
-                    $rowArray = $import->map($rowArray);
-                }
-
-                $this->manager->add(
-                    $row->getIndex(),
-                    $rowArray
-                );
-
-                // Flush each batch.
-                if (($i % $batchSize) === 0) {
-                    $this->manager->flush($import, $batchSize > 1);
-                    $i = 0;
-                }
+            if ($withMapping) {
+                $rowArray = $import->map($rowArray);
             }
 
-            if ($import instanceof WithProgressBar) {
-                $import->getConsoleOutput()->progressAdvance();
+            $this->manager->add(
+                $row->getIndex(),
+                $rowArray
+            );
+
+            // Flush each batch.
+            if (($i % $batchSize) === 0) {
+                $this->manager->flush($import, $batchSize > 1);
+                $i = 0;
+
+                if ($progessBar) {
+                    $import->getConsoleOutput()->progressAdvance($batchSize);
+                }
             }
         }
 

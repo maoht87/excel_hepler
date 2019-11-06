@@ -1,11 +1,11 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
+use Omt\ExcelHelper\Concerns\Importable;
+use Omt\ExcelHelper\Concerns\ToArray;
+use Omt\ExcelHelper\Tests\TestCase;
 use PHPUnit\Framework\Assert;
-use Maatwebsite\Excel\Tests\TestCase;
-use Maatwebsite\Excel\Concerns\ToArray;
-use Maatwebsite\Excel\Concerns\Importable;
 
 class ToArrayTest extends TestCase
 {

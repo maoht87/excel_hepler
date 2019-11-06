@@ -1,17 +1,19 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests;
+namespace Omt\ExcelHelper\Tests;
 
-use Maatwebsite\Excel\Excel;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobProcessing;
-use Maatwebsite\Excel\Files\TemporaryFile;
-use Maatwebsite\Excel\Jobs\AppendDataToSheet;
-use Maatwebsite\Excel\Files\RemoteTemporaryFile;
-use Maatwebsite\Excel\Tests\Data\Stubs\QueuedExport;
-use Maatwebsite\Excel\Tests\Data\Stubs\ShouldQueueExport;
-use Maatwebsite\Excel\Tests\Data\Stubs\AfterQueueExportJob;
-use Maatwebsite\Excel\Tests\Data\Stubs\EloquentCollectionWithMappingExport;
+use Illuminate\Support\Facades\Queue;
+use Omt\ExcelHelper\Excel;
+use Omt\ExcelHelper\Files\RemoteTemporaryFile;
+use Omt\ExcelHelper\Files\TemporaryFile;
+use Omt\ExcelHelper\Jobs\AppendDataToSheet;
+use Omt\ExcelHelper\Tests\Data\Stubs\AfterQueueExportJob;
+use Omt\ExcelHelper\Tests\Data\Stubs\EloquentCollectionWithMappingExport;
+use Omt\ExcelHelper\Tests\Data\Stubs\QueuedExport;
+use Omt\ExcelHelper\Tests\Data\Stubs\QueuedExportWithFailedHook;
+use Omt\ExcelHelper\Tests\Data\Stubs\ShouldQueueExport;
+use Throwable;
 
 class QueuedExportTest extends TestCase
 {
@@ -110,5 +112,19 @@ class QueuedExportTest extends TestCase
         $this->assertEquals([
             ['Patrick', 'Brouwers'],
         ], $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function can_catch_failures()
+    {
+        $export = new QueuedExportWithFailedHook();
+        try {
+            $export->queue('queued-export.xlsx');
+        } catch (Throwable $e) {
+        }
+
+        $this->assertTrue(app('queue-has-failed'));
     }
 }

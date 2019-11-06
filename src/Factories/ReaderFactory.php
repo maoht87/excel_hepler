@@ -1,16 +1,15 @@
 <?php
 
-namespace Maatwebsite\Excel\Factories;
+namespace Omt\ExcelHelper\Factories;
 
+use Omt\ExcelHelper\Concerns\MapsCsvSettings;
+use Omt\ExcelHelper\Concerns\WithCustomCsvSettings;
+use Omt\ExcelHelper\Exceptions\NoTypeDetectedException;
+use Omt\ExcelHelper\Files\TemporaryFile;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
-use Maatwebsite\Excel\Files\TemporaryFile;
-use PhpOffice\PhpSpreadsheet\Reader\IReader;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
-use Maatwebsite\Excel\Concerns\MapsCsvSettings;
-use PhpOffice\PhpSpreadsheet\Reader\BaseReader;
-use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
-use Maatwebsite\Excel\Exceptions\NoTypeDetectedException;
+use PhpOffice\PhpSpreadsheet\Reader\IReader;
 
 class ReaderFactory
 {
@@ -26,7 +25,6 @@ class ReaderFactory
      */
     public static function make($import, TemporaryFile $file, string $readerType = null): IReader
     {
-        /** @var IReader|BaseReader $reader */
         $reader = IOFactory::createReader(
             $readerType ?: static::identify($file)
         );

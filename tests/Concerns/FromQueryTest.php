@@ -1,17 +1,17 @@
 <?php
 
-namespace Maatwebsite\Excel\Tests\Concerns;
+namespace Omt\ExcelHelper\Tests\Concerns;
 
-use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Tests\TestCase;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\User;
-use Maatwebsite\Excel\Tests\Data\Stubs\Database\Group;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Maatwebsite\Excel\Tests\Data\Stubs\FromUsersQueryExport;
-use Maatwebsite\Excel\Tests\Data\Stubs\FromNonEloquentQueryExport;
-use Maatwebsite\Excel\Tests\Data\Stubs\FromNestedArraysQueryExport;
-use Maatwebsite\Excel\Tests\Data\Stubs\FromGroupUsersQueuedQueryExport;
-use Maatwebsite\Excel\Tests\Data\Stubs\FromUsersQueryExportWithEagerLoad;
+use Illuminate\Support\Facades\DB;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\Group;
+use Omt\ExcelHelper\Tests\Data\Stubs\Database\User;
+use Omt\ExcelHelper\Tests\Data\Stubs\FromGroupUsersQueuedQueryExport;
+use Omt\ExcelHelper\Tests\Data\Stubs\FromNestedArraysQueryExport;
+use Omt\ExcelHelper\Tests\Data\Stubs\FromNonEloquentQueryExport;
+use Omt\ExcelHelper\Tests\Data\Stubs\FromUsersQueryExport;
+use Omt\ExcelHelper\Tests\Data\Stubs\FromUsersQueryExportWithEagerLoad;
+use Omt\ExcelHelper\Tests\TestCase;
 
 class FromQueryTest extends TestCase
 {
@@ -50,28 +50,6 @@ class FromQueryTest extends TestCase
      */
     public function can_export_from_query()
     {
-        $export = new FromUsersQueryExport;
-
-        $response = $export->store('from-query-store.xlsx');
-
-        $this->assertTrue($response);
-
-        $contents = $this->readAsArray(__DIR__ . '/../Data/Disks/Local/from-query-store.xlsx', 'Xlsx');
-
-        $allUsers = $export->query()->get()->map(function (User $user) {
-            return array_values($user->toArray());
-        })->toArray();
-
-        $this->assertEquals($allUsers, $contents);
-    }
-
-    /**
-     * @test
-     */
-    public function can_export_from_query_with_batch_caching()
-    {
-        config()->set('excel.cache.driver', 'batch');
-
         $export = new FromUsersQueryExport;
 
         $response = $export->store('from-query-store.xlsx');
